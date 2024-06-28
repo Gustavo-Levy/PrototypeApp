@@ -1,0 +1,137 @@
+﻿@page "/RentalInfo"
+@using PrototypeApp.Logic;
+
+<h1>RentalInfo</h1>
+
+
+<input type="text" @bind="rentalId" id="rentalId" placeholder="Enter Equipment ID">
+<button @onclick="@(async () => SearchRental(rentalId))">Search Rental</button>
+<button @onclick="ShowCreateForm">Create Rental</button>
+<button @onclick="ShowSalesReportForm">Generate Sales Report</button>
+
+@if (showSearchResult != null)
+{
+    <h2>Rental Details</h2>
+    <p>Rental ID: @rentalId</p>
+    <p>Customer ID: @customerId</p>
+    <p>Equipment ID: @equipmentId</p>
+    <p>Last Name: @lastName</p>
+    <p>Rental Date: @rentalDate</p>
+    <p>Return Date: @returnDate</p>
+    <p>Total Cost: @totalCost</p>
+}
+else if (showSearchResult && rental == null)
+{
+    <p>Rental not found</p>
+}
+
+@if (showCreateForm)
+{
+    <h2>Create New Rental</h2>
+    <form>
+        <label>Rental ID: <input type="number" @bind="rentalId" /></label><br />
+        <label>Customer ID: <input type="number" @bind="customerId" /></label><br />
+        <label>Equipment ID: <input type="number" @bind="equipmentId" /></label><br />
+        <label>Last Name: <input type="text" @bind="lastName" /></label><br />
+        <label>Rental Date: <input type="datetime" @bind="rentalDate" /></label><br />
+        <label>Return Date: <input type="datetime" @bind="returnDate" /></label><br />
+        <label>Total Cost: <input type="number" @bind="totalCost" /></label><br />
+        <button @onclick="CreateRental">Create Rental</button>
+    </form>
+}
+
+@if (showSalesReportForm)
+{
+    <h2>Sales Report</h2>
+    <form>
+        <label>Start Date: <input type="datetime" @bind="startDate" /></label><br />
+        <label>End Date: <input type="datetime" @bind="endDate" /></label><br />
+        <button @onclick="GenerateSalesReport">Generate Report</button>
+    </form>
+}
+
+@code{
+    @code {
+        SystemDB? systemDB;
+        Customer? customer;
+        Rental? rental;
+        RentalInfo? rentalInfo;
+        CustomerBroker? CB;
+        RentalBroker? RB;
+        RentalItemBroker? RIB;
+
+        bool showSearchResult = false;
+        bool showCreateForm = false;
+        bool showSalesReportForm = false;
+
+        int rentalId;
+        int customerId;
+        int equipmentId;
+        string lastName;
+        DateTime rentalDate;
+        DateTime returnDate;
+        double totalCost;
+
+        DateTime startDate;
+        DateTime endDate;
+
+        async Task SearchRental(int rentalId)
+        {
+            rental = RB.SearchRental(rentalId);
+            if (rental != null)
+            {
+                showSearchResult = true;
+                showCreateForm = false;
+                showSalesReportForm = false;
+            }
+            else
+            {
+                showSearchResult = true;
+                showCreateForm = false;
+                showSalesReportForm = false;
+            }
+        }
+
+        async Task CreateRental()
+        {
+            // Call the method in RentalBroker to create a new rental
+            rental = RB.CreateNewRental(rentalId, customerId, equipmentId, lastName, rentalDate, returnDate, totalCost);
+            if (rental != null)
+            {
+                showSearchResult = true;
+                showCreateForm = false;
+                showSalesReportForm = false;
+            }
+            else
+            {
+                showSearchResult = true;
+                showCreateForm = false;
+                showSalesReportForm = false;
+            }
+        }
+
+        async Task GenerateSalesReport()
+        {
+            // Call the method in RentalBroker to generate sales report
+            RB.GenerateSalesByDateReport(startDate, endDate);
+        }
+
+        private void ShowSearchResults()
+        {
+            showSearchResult = true;
+        }
+        
+        private void ShowCreateForm()
+        {
+            showCreateForm = true;
+        }
+        
+        private void ShowSalesReportForm()
+        {
+            showSalesReportForm = true;
+        }
+    }
+}
+
+
+    

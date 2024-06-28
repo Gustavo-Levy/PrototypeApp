@@ -1,0 +1,1 @@
+C:\Users\gusta\Source\Repos\Gustavo-Levy\PrototypeApp\PrototypeApp.csproj;x64

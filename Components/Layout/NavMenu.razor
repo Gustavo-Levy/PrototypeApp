@@ -1,0 +1,32 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">PrototypeApp</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" id="navbar-toggler" class="navbar-toggler" />
+<label for="navbar-toggler" class="navbar-toffler-label">Toggle Navigation</label>
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="EquipmentInfo">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> EquipmentInfo
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="RentalInfo">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> RentalInfo
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="CustomerInfo">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> CustomerInfo
+            </NavLink>
+        </div>
+    </nav>
+</div>

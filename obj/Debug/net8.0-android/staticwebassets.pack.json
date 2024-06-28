@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\gusta\\Source\\Repos\\Gustavo-Levy\\PrototypeApp\\obj\\Debug\\net8.0-android\\scopedcss\\bundle\\PrototypeApp.styles.css",
+      "PackagePath": "staticwebassets\\PrototypeApp.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\gusta\\Source\\Repos\\Gustavo-Levy\\PrototypeApp\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\gusta\\Source\\Repos\\Gustavo-Levy\\PrototypeApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\gusta\\Source\\Repos\\Gustavo-Levy\\PrototypeApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\gusta\\Source\\Repos\\Gustavo-Levy\\PrototypeApp\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\gusta\\Source\\Repos\\Gustavo-Levy\\PrototypeApp\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.PrototypeApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.build.PrototypeApp.props",
+      "PackagePath": "build\\PrototypeApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildMultiTargeting.PrototypeApp.props",
+      "PackagePath": "buildMultiTargeting\\PrototypeApp.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildTransitive.PrototypeApp.props",
+      "PackagePath": "buildTransitive\\PrototypeApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,132 @@
+﻿@page "/CustomerInfo"
+@using PrototypeApp.Logic;
+
+<h1>CustomerInfo</h1>
+
+
+<input type="text" @bind="customerId" id="customerId" placeholder="Enter Customer ID">
+<button @onclick="@(async () => SearchCustomer(customerId))">Search Customer</button>
+<button @onclick="ShowCreateCustomerForm">Create New Customer</button>
+
+@if (showSearchResult != null)
+{
+    
+        <h2>Customer Details</h2>
+        <p>Customer ID: @customerId</p>
+        <p>Last Name: @lastName</p>
+        <p>First Name: @firstName</p>
+        <p>Phone Number: @phoneNumber</p>
+        <p>Email Address: @emailAddress</p>
+        <button @onclick="@(async () => ModifyCustomer())">Modify Customer</button>
+    
+    
+}      
+else if (showSearchResult && customer == null)
+{
+    <p>Customer not found</p>
+}
+
+@if (showCustomerForm)
+{
+
+    <h2>Create New Customer</h2>
+    <form>
+          <label>Last Name: <input type="text" @bind="lastName" /></label><br />
+          <label>First Name: <input type="text" @bind="firstName" /></label><br />
+          <label>Phone Number: <input type="text" @bind="phoneNumber" /></label><br />
+          <label>Email Address: <input type="email" @bind="emailAddress" /></label><br />
+          <button @onclick= "CreateCustomer" type="button">Create Customer</button>
+    </form>
+}
+
+@if (showModifyForm)
+{
+    <h2>Modify Customer</h2>
+    <form>
+        <label>Last Name: <input type="text" @bind="lastName" /></label><br />
+        <label>First Name: <input type="text" @bind="firstName" /></label><br />
+        <label>Phone Number: <input type="text" @bind="phoneNumber" /></label><br />
+        <label>Email Address: <input type="email" @bind="emailAddress" /></label><br />
+        <button @onclick="@(async () => AcceptChanges(lastName, firstName, phoneNumber, emailAddress))">Accept Changes</button>
+    </form>
+}
+
+@if (customer != null && banned == false)
+{
+    <button @onclick="@(async () => BanCustomer(customerId))">Ban Customer</button>
+}
+
+@if (showMessage)
+{
+    <p>@message</p>
+}
+
+@code {
+    SystemDB? systemDB;
+    Customer? customer;
+    CustomerBroker? CB;
+
+
+    string? firstName, lastName, emailAddress, phoneNumber;
+    bool banned;
+    int customerId;
+
+    public bool showCustomerForm = false;
+    public bool showSearchResult = false;
+    public bool showModifyForm = false;
+    public bool showMessage = false;
+    public string message  = "";
+
+    public async Task OnInitializeAsync()
+    {
+        systemDB = new SystemDB();
+        systemDB.Initialize();
+        CB = new CustomerBroker(systemDB);
+        CB.LoadCustomer();
+        CB.LoadEquipment();
+        CB.LoadRental();
+    }
+
+
+    internal Customer SearchCustomer(int customerId)
+    {
+
+        CB.SearchCustomer(customerId);
+        showSearchResult = true;
+        return customer;
+    }
+
+    public void AcceptChanges(string lastName, string firstName, string phoneNumber, string emailAddress)
+    {
+        customer = new Customer(customerId, lastName, firstName, phoneNumber, emailAddress, banned);
+        CB.ModifyCustomer(customer);
+        message = "Changes accepted and saved.";
+        showMessage = true;
+    }
+
+    public void CreateCustomer()
+    {
+
+        customer = CB.CreateCustomer(lastName, firstName, phoneNumber, emailAddress);
+        showSearchResult = true;
+    }
+
+    public void BanCustomer(int customerId)
+    {
+        // Implement logic to ban the customer
+        // Example:
+        CB.BanCustomer(customerId);
+        message = "Customer banned successfully.";
+        showMessage = true;
+    }
+
+    public void ShowCreateCustomerForm()
+    {
+        showCustomerForm = true;
+    }
+
+    public void ModifyCustomer()
+    {
+        showModifyForm = true;
+    }
+}

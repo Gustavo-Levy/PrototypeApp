@@ -1,0 +1,98 @@
+﻿@page "/EquipmentInfo"
+@using PrototypeApp.Logic;
+
+<h1>EquipmentInfo</h1>
+
+
+<input type="text" @bind="equipmentId" id="equipmentId" placeholder="Enter Equipment ID">
+<button @onclick="@(async () => SearchEquipment(equipmentId))">Search Equipment</button>
+<button @onclick="ShowAddEquipmentForm">Add New Equipment</button>
+
+@if (showSearchResult)
+{
+
+    <h2>Equipment Details</h2>
+    <p>Equipment ID: @equipment.EquipmentId</p>
+    <p>Category: @equipment.CategoryId</p>
+    <p>Name: @equipment.Name</p>
+    <p>Description: @equipment.Description</p>
+    <p>Daily Cost: @equipment.DailyCost</p>
+}
+else
+{
+    <h2>Add New Equipment</h2>
+    <form>
+        <label>Equipment ID: <input type="text" @bind="equipmentId" /></label><br />
+        <label>Name: <input type="text" @bind="name" /></label><br />
+        <label>Desciption: <input type="text" @bind="description" /></label><br />
+        <label>Daily Cost: <input type="text" @bind="dailyCost" /></label><br />
+        <label>Category: <input type="number" @bind="categoryId" /></label><br />
+        <button @onclick="@(async () => AddEquipment(equipmentId, name, description, dailyCost, categoryId))">Add Equipment</button>
+    </form>
+}
+
+
+
+@if (equipment != null)
+{
+    <button @onclick="RemoveEquipment">Remove Equipment</button>
+}
+
+@if (showMessage)
+{
+    <p>@message</p>
+}
+
+@code {
+    SystemDB? systemDB;
+    Equipment? equipment;
+    EquipmentBroker? EB;
+
+    string? name, description;
+    int equipmentId, categoryId;
+    double dailyCost;
+
+    public bool showEquipmentForm = false;
+    public bool showSearchResult = false;
+    public bool showMessage = false;
+    public string message = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        systemDB = new SystemDB();
+        systemDB.Initialize();
+        EB = new EquipmentBroker(systemDB);
+        EB.LoadEquipment();
+
+    }
+
+
+    private void SearchEquipment(int equipmentId)
+    {
+        equipment = EB.SearchEquipment(equipmentId);
+        showSearchResult = true;
+    }
+
+    private void AddEquipment(int equipmentId, string name, string description, double dailyCost, int categoryId)
+    {
+        // Implement logic to add new equipment
+        // Example:
+        equipment = new Equipment(equipmentId, name, description, dailyCost, categoryId);
+        EB.AddEquipment(equipmentId, name, description, dailyCost, categoryId);
+        showSearchResult = true;
+    }
+
+    private void RemoveEquipment()
+    {
+        // Implement logic to remove equipment
+        // Example:
+        EB.RemoveUsedEquipment(equipmentId);
+        message = "Equipment removed successfully.";
+        showMessage = true;
+    }
+
+    private void ShowAddEquipmentForm()
+    {
+        showEquipmentForm = true;
+    }
+}
